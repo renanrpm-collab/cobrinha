@@ -46,7 +46,6 @@ workflows:
         notify:
           success: true
           failure: true
-      # Descomente para enviar automaticamente para o TestFlight
-      # app_store_connect:
-      #   auth: integration
-      #   submit_to_testflight: true
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
