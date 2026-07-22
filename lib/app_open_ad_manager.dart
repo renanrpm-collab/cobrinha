@@ -25,7 +25,7 @@ class AppOpenAdManager {
     _isLoadingAd = true;
     AppOpenAd.load(
       adUnitId: AdUnitIds.appOpen,
-      request: const AdRequest(),
+      request: const AdRequest(nonPersonalizedAds: true),
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {
           _isLoadingAd = false;

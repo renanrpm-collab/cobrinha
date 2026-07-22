@@ -71,7 +71,7 @@ class _TelaInicialState extends State<TelaInicial>
     _bannerAd = BannerAd(
       adUnitId: AdUnitIds.banner,
       size: AdSize.banner,
-      request: const AdRequest(),
+      request: const AdRequest(nonPersonalizedAds: true),
       listener: BannerAdListener(
         onAdLoaded: (_) => mounted ? setState(() {}) : null,
         onAdFailedToLoad: (ad, _) {
@@ -85,7 +85,7 @@ class _TelaInicialState extends State<TelaInicial>
   void _carregarInterstitial() {
     InterstitialAd.load(
       adUnitId: AdUnitIds.interstitial,
-      request: const AdRequest(),
+      request: const AdRequest(nonPersonalizedAds: true),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) => _interstitialAd = ad,
         onAdFailedToLoad: (_) => _interstitialAd = null,

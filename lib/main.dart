@@ -413,7 +413,7 @@ class _SnakeGameState extends State<SnakeGame> with WidgetsBindingObserver {
     final banner = BannerAd(
       adUnitId: AdUnitIds.banner,
       size: adaptiveSize ?? AdSize.banner,
-      request: const AdRequest(),
+      request: const AdRequest(nonPersonalizedAds: true),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           if (!mounted) { ad.dispose(); return; }
@@ -438,7 +438,7 @@ class _SnakeGameState extends State<SnakeGame> with WidgetsBindingObserver {
   void _loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: AdUnitIds.interstitial,
-      request: const AdRequest(),
+      request: const AdRequest(nonPersonalizedAds: true),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) { if (mounted) _interstitialAd = ad; else ad.dispose(); },
         onAdFailedToLoad: (_) { if (mounted) _interstitialAd = null; },
@@ -449,7 +449,7 @@ class _SnakeGameState extends State<SnakeGame> with WidgetsBindingObserver {
   void _loadRewardedAd() {
     RewardedAd.load(
       adUnitId: AdUnitIds.rewarded,
-      request: const AdRequest(),
+      request: const AdRequest(nonPersonalizedAds: true),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) { if (mounted) _rewardedAd = ad; else ad.dispose(); },
         onAdFailedToLoad: (_) { if (mounted) _rewardedAd = null; },
