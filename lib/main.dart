@@ -6,17 +6,45 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+import 'ad_ids.dart';
+import 'app_open_ad_manager.dart';
 import 'tela_inicial.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   MobileAds.instance.initialize();
+  AppOpenAdManager.instance.loadAd();
   runApp(const EzCobrinhaApp());
 }
 
-class EzCobrinhaApp extends StatelessWidget {
+class EzCobrinhaApp extends StatefulWidget {
   const EzCobrinhaApp({super.key});
+
+  @override
+  State<EzCobrinhaApp> createState() => _EzCobrinhaAppState();
+}
+
+class _EzCobrinhaAppState extends State<EzCobrinhaApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Mostra o anúncio de abertura ao retornar do background (não no cold start).
+    if (state == AppLifecycleState.resumed) {
+      AppOpenAdManager.instance.showAdIfAvailable();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -383,7 +411,7 @@ class _SnakeGameState extends State<SnakeGame> with WidgetsBindingObserver {
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(screenWidth);
     if (!mounted) return;
     final banner = BannerAd(
-      adUnitId: 'ca-app-pub-4780503075734258/3430328366',
+      adUnitId: AdUnitIds.banner,
       size: adaptiveSize ?? AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
@@ -409,7 +437,7 @@ class _SnakeGameState extends State<SnakeGame> with WidgetsBindingObserver {
 
   void _loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-4780503075734258/9687149915',
+      adUnitId: AdUnitIds.interstitial,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) { if (mounted) _interstitialAd = ad; else ad.dispose(); },
@@ -420,7 +448,7 @@ class _SnakeGameState extends State<SnakeGame> with WidgetsBindingObserver {
 
   void _loadRewardedAd() {
     RewardedAd.load(
-      adUnitId: 'ca-app-pub-4780503075734258/2608201288',
+      adUnitId: AdUnitIds.rewarded,
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) { if (mounted) _rewardedAd = ad; else ad.dispose(); },

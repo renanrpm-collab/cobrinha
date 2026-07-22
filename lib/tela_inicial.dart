@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import 'ad_ids.dart';
 import 'main.dart';
 
 class TelaInicial extends StatefulWidget {
@@ -68,8 +69,7 @@ class _TelaInicialState extends State<TelaInicial>
 
   void _carregarBanner() {
     _bannerAd = BannerAd(
-      // ==== ID DO BANNER DE PRODUÇÃO ====
-      adUnitId: 'ca-app-pub-4780503075734258/3911371217',
+      adUnitId: AdUnitIds.banner,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
@@ -84,8 +84,7 @@ class _TelaInicialState extends State<TelaInicial>
 
   void _carregarInterstitial() {
     InterstitialAd.load(
-      // ==== ID DO INTERSTICIAL DE PRODUÇÃO ====
-      adUnitId: 'ca-app-pub-4780503075734258/9687149915',
+      adUnitId: AdUnitIds.interstitial,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) => _interstitialAd = ad,
