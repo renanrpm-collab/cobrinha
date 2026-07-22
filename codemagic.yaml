@@ -9,8 +9,6 @@ workflows:
       ios_signing:
         provisioning_profiles:
           - com.ezvstudio.snake
-        distribution_type: app_store
-        bundle_identifier: com.ezvstudio.snake
       vars:
         BUNDLE_ID: "com.ezvstudio.snake"
         XCODE_WORKSPACE: "ios/Runner.xcworkspace"
